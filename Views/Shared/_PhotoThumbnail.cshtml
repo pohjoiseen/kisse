@@ -1,0 +1,11 @@
+@using Kisse.Controllers
+@model Kisse.Data.Photo
+
+<div id="photo-thumbnail-@Model.Id" class="photo-thumbnail" data-lat="@Model.Lat" data-lng="@Model.Lng">
+     <input type="hidden" name="photoIds[]" value="@Model.Id">
+     <img width="@(PhotoController.ThumbnailSize / 2)" 
+          height="@(PhotoController.ThumbnailSize / 2)" 
+          src="@Model.ThumbnailFile" class="object-fit-cover border-1"
+          style="cursor: pointer;"
+          hx-get hx-controller="Photo" hx-action="View" hx-route-id="@Model.Id" hx-target="#photo-view" hx-swap="innerHTML" />
+</div>

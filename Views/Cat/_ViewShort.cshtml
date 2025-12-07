@@ -1,0 +1,16 @@
+@model CatModel?
+
+<input type="hidden" name="catId" value="@Model?.Id">
+
+@if (Model is not null)
+{
+    @Model.Name
+    @if (!String.IsNullOrWhiteSpace(Model.Description))
+    {
+        <span class="text-muted">(@Model.Description)</span>
+    }
+}
+else
+{
+    <em>unidentified cat</em>
+}

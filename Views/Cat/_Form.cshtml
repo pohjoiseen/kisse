@@ -1,0 +1,18 @@
+@model CatModel
+
+<input type="hidden" name="lat" value="@Model.Lat">
+<input type="hidden" name="lng" value="@Model.Lng">
+<p>
+    <label for="name"><strong>Name:</strong></label>
+    <input type="text" class="form-control" name="name" value="@Model.Name">
+    @Html.ValidationMessageFor(m => m.Name)
+</p>
+<p>
+    <label for="description"><strong>Description:</strong></label>
+    <textarea class="w-100 form-control textarea-autosize" name="description">@Model.Description</textarea>
+    @Html.ValidationMessageFor(m => m.Description)
+</p>
+<p class="form-check form-check-inline">
+    <input class="form-check-input" type="checkbox" checked disabled>
+    <strong class="form-check-label">Good cat</strong>
+</p>

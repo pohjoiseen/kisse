@@ -1,0 +1,25 @@
+@model CatModel
+
+@if (Context.Request.Method == "POST" && ViewData.ModelState.IsValid)
+{
+    <span id="cat" hx-swap-oob="true">
+        <partial name="_ViewShort" model="Model" />
+    </span>
+}
+else
+{
+    <div class="popup-form-page">
+        <form class="form container mt-4" hx-post hx-controller="Cat" hx-action="AddFromPick" hx-target="#pick-cat" 
+              hx-disabled-elt="#add-cat-button" hx-indicator="#add-cat-spinner">
+            <h1>New 🐈</h1>
+
+            <partial name="_Form" model="@Model"/>
+
+            <div class="mt-4">
+                <button type="submit" id="add-cat-button" class="btn btn-primary"><i class="bi bi-save"></i> Save</button>
+                <button type="submit" name="cancel" value="true" class="btn btn-secondary">Cancel</button>
+                <span id="add-cat-spinner" class="spinner-border align-middle htmx-indicator"></span>
+            </div>
+        </form>
+    </div>
+}

@@ -1,0 +1,6 @@
+@model IEnumerable<Kisse.Data.Photo>
+
+@foreach (var photo in Model)
+{
+    <partial name="_PhotoThumbnail" model="@photo" />
+}

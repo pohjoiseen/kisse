@@ -1,0 +1,18 @@
+﻿@model Kisse.Models.IndexMapModel
+@{
+    ViewData["Title"] = "Home Page";
+    ViewData["BodyClass"] = "index";
+}
+
+<div id="homepage-map" class="w-100 h-100 flex-grow-1"></div>
+<div id="photo-view"></div>
+<script defer src="~/js/homepage.js" asp-append-version="true"></script>
+<script>
+    // Pass through all map data statically
+    window.CATS = @Json.Serialize(@Model.Cats);
+    window.OBSERVATIONS = @Json.Serialize(@Model.Observations);
+</script>
+<style>
+    /* Do not allow deleting photos via fullscreen views on the main page */
+    .photo-view-delete-button { display: none; }
+</style>

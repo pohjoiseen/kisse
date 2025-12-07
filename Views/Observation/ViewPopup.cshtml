@@ -1,0 +1,12 @@
+@model Kisse.Models.ObservationModel
+
+<div>👀 <b><a href="@Url.ActionLink("Edit", null, new { id = Model.Id })">@Model.Date.ToString("d.M.yyyy HH:mm")</a></b>
+    by <b>@Model.Username</b><br/>@Model.Description</div>
+
+<div class="d-flex gap-2 flex-wrap">
+    @foreach (var id in Model.PhotoIds)
+    {
+        <partial name="_PhotoThumbnail" model="@Model.Photos![id]" />
+    }
+</div>
+

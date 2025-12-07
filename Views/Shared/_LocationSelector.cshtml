@@ -1,0 +1,10 @@
+@model ValueTuple<double, double, int>
+
+<input type="hidden" name="lat" id="location-selector-lat" value="@Model.Item1">
+<input type="hidden" name="lng" id="location-selector-lng" value="@Model.Item2">
+<input type="hidden" name="zoom" id="location-selector-zoom" value="@Model.Item3">
+@* Leaflet container, creation handled in site.js *@
+<div id="location-selector" style="width: 100%; aspect-ratio: 1 / 1; position: relative;" hx-preserve="true">
+    <div style="background: rgba(0,0,0,0.8); position: absolute; left: 50%; top: 25%; width: 1px; bottom: 25%; z-index: 1000;"></div>
+    <div style="background: rgba(0,0,0,0.8); position: absolute; left: 25%; top: 50%; height: 1px; right: 25%; z-index: 1000;"></div>
+</div>

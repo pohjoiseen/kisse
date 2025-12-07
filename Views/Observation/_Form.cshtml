@@ -1,0 +1,86 @@
+@using System.Security.Claims
+@using Htmx
+@model Kisse.Models.ObservationModel
+@{
+    bool isRO = Model.Username != User.FindFirstValue(ClaimTypes.Name); 
+}
+
+<input type="hidden" name="id" value="@Model.Id">
+<input type="hidden" name="username" value="@Model.Username">
+<input type="hidden" name="date" value="@Model.Date.ToString("u")">
+
+<div class="row">
+    <div class="col-md-6 col-12">
+        <p class="mb-0"><strong>Photos:</strong></p>
+        @* Display existing photos *@
+        <div id="photos" class="d-flex gap-2 flex-wrap">
+            @foreach (var id in Model.PhotoIds)
+            {
+                <partial name="_PhotoThumbnail" model="@Model.Photos![id]"/>
+            }
+            @if (isRO && Model.PhotoIds.Count == 0)
+            {
+                <span class="text-muted">no photos</span>
+            }
+        </div>
+        @* Allow uploading more *@
+        @if (!isRO)
+        {
+            <p>
+                <button type="button" id="upload-button" class="btn btn-secondary position-relative mt-2 me-2"
+                        onclick="document.getElementById('upload-input').click(); event.stopPropagation(); event.preventDefault()">
+                    <i class="bi bi-upload"></i> Add photo
+                </button>
+                <span id="upload-spinner" class="spinner-border align-middle htmx-indicator"></span>
+                @* Appends to div with photo thumbnails list above *@
+                <input type="file" name="files" accept="image/jpeg" multiple="multiple" hidden="hidden" id="upload-input" hx-trigger="input[!!target.value]"
+                       hx-post hx-controller="Photo" hx-action="Upload" hx-encoding="multipart/form-data" hx-target="#photos" hx-swap="beforeend" hx-params="files"
+                       hx-disabled-elt="#upload-button" hx-indicator="#upload-spinner"/>
+            </p>
+        }
+        @* Container for fullscreen view *@
+        <div id="photo-view"></div>
+        @Html.ValidationMessageFor(m => m.PhotoIds)
+    </div>
+    
+    <div class="col-md-6 col-12">
+        <p class="mb-0"><strong>Location:</strong></p>
+        <partial name="_LocationSelector" model="@((Model.Lat, Model.Lng, Model.Zoom))"/>
+        @Html.ValidationMessageFor(m => m.Lat)
+    </div>
+</div>
+
+<p>
+    <label for="description"><strong>Comment:</strong></label>
+    <textarea id="description" class="w-100 form-control textarea-autosize" name="description" readonly="@isRO">@Model.Description</textarea>
+    @Html.ValidationMessageFor(m => m.Description)
+</p>
+
+<p class="mt-4 mb-0">
+    <strong>Known cat:</strong>
+    <span id="cat">
+        <partial name="../Cat/_ViewShort" model="Model.Cat" />
+    </span>
+</p>
+<div class="mb-4">
+    @if (!isRO)
+    {
+        <button class="btn btn-secondary" hx-get hx-controller="Cat" hx-action="Pick"
+                hx-route-id="@Model.CatId" hx-target="#pick-cat"
+                hx-vals="js:{lat: document.getElementById('location-selector-lat').value, lng: document.getElementById('location-selector-lng').value}"
+                hx-indicator="#pick-cat-spinner" hx-disabled-elt="this">
+            <i class="bi bi-search-heart"></i>
+            Choose...
+        </button>
+        <span id="pick-cat-spinner" class="spinner-border align-middle htmx-indicator"></span>
+    }
+    @Html.ValidationMessageFor(m => m.CatId)
+</div>
+<div id="pick-cat"></div>
+
+@if (!Context.Request.IsHtmx())  // script only on first load
+{
+    <script defer src="~/js/observation-form.js" asp-append-version="true"></script>
+}
+
+<script>window.isModified = false</script>

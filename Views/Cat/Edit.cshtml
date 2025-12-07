@@ -1,0 +1,48 @@
+@model Kisse.Models.CatModel
+@{
+    ViewData["Title"] = "Edit Cat";
+}
+
+<form class="form container mt-2" hx-post hx-controller="Cat" hx-action="Edit" hx-route-id="@Model.Id" hx-swap="outerHTML"
+      hx-disabled-elt="#update-cat-button" hx-indicator="#update-cat-spinner">
+    <h1 class="d-flex w-100 justify-content-between">
+        <span>Edit 🐈</span>
+        <button class="btn btn-danger" hx-confirm="Delete this cat?  Observations will remain."
+                hx-post hx-controller="Cat" hx-action="Delete" hx-route-id="@Model.Id"><i class="bi bi-trash"></i></button>
+    </h1>
+    
+    <partial name="_Form" model="@Model" />
+    
+    <div class="mt-4">
+        <h2>Observations:</h2>
+        @if (Model.Observations!.Count > 0)
+        {
+            @foreach (var observation in Model.Observations)
+            {
+                <div class="card mt-2">
+                    <div class="card-header">
+                        <h5 class="m-0">👀 <a href="@Url.ActionLink("Edit", "Observation", new { id = observation.Id })">@observation.Date.ToString("d.M.yyyy HH:mm")</a> by @observation.Username</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex gap-2 flex-wrap">
+                            @foreach (var photo in observation.Photos!)
+                            {
+                                <partial name="_PhotoThumbnail" model="photo.Value" />
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <p class="text-muted">None recorded yet</p>
+        }
+    </div>
+    <div id="photo-view"></div>
+    
+    <div class="mt-4">
+        <button id="update-cat-button" type="submit" class="btn btn-primary" hx-><i class="bi bi-save"></i> Update</button>
+        <span id="update-cat-spinner" class="spinner-border align-middle htmx-indicator"></span>
+    </div>
+</form>

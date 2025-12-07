@@ -1,0 +1,12 @@
+@model Kisse.Models.ObservationModel
+@{
+    ViewData["Title"] = "Add Observation";
+}
+
+<form class="form container mt-2" hx-post hx-controller="Observation" hx-action="Add" hx-swap="outerHTML" hx-params="not files" hx-disinherit="*">
+    <h1>New 🐈 observation</h1>
+
+    <partial name="_Form" model="@Model" />
+    
+    <button type="submit" class="btn btn-primary"><i class="bi bi-save"></i> Save</button>
+</form>

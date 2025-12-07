@@ -1,0 +1,83 @@
+/* Kisse main CSS file.  Own styles are minimal, use Bootstrap and inline CSS as much as practical */
+
+/* Some default styles from ASP.NET MVC project template */
+
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+.form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
+  color: var(--bs-secondary-color);
+  text-align: end;
+}
+
+.form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
+  text-align: start;
+}
+
+/* Add space on bottom of all forms */
+
+.form {
+  margin-bottom: 60px;
+}
+
+/* ASP.NET MVC validation */
+
+.field-validation-error {
+  color: var(--bs-danger);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+/* Index page map */
+
+body.index {
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+.observation-popup-loading, .cat-popup-loading {
+  width: 320px;
+}
+
+.map-emoji-icon {
+  background: none;
+  border: none;
+  text-shadow: #000 0 0 3px;
+  font-size: 15px;
+}
+
+.map-thumb-icon {
+  box-shadow: #000 0 0 3px;
+}
+
+/* Popup forms */
+
+.popup-form-page {
+  width: 100vw;
+  min-height: 100vh;
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  z-index: 2000;
+  left: 0;
+  right: 0;
+  top: 0;
+  background: var(--bs-body-bg);
+}

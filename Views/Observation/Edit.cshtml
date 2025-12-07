@@ -1,0 +1,22 @@
+@model Kisse.Models.ObservationModel
+@{
+    ViewData["Title"] = "Edit Observation";
+}
+
+<form class="form container mt-2" hx-post hx-controller="Observation" hx-action="Edit" hx-route-id="@Model.Id" hx-swap="outerHTML" hx-params="not files" hx-disinherit="*">
+    <h1 class="d-flex w-100 justify-content-between">
+        <span>👀 @Model.Date.ToString("d.M.yyyy HH:mm") by @Model.Username</span>
+        @if (Model.Username == User.Identity?.Name)
+        {
+            <button class="btn btn-danger" hx-confirm="Delete this observation?  It will be deleted permanently along with all photos!"
+                    hx-post hx-controller="Observation" hx-action="Delete" hx-route-id="@Model.Id"><i class="bi bi-trash"></i></button>
+        }
+    </h1>
+    
+    <partial name="_Form" model="@Model" />
+    
+    @if (Model.Username == User.Identity?.Name)
+    {
+        <button type="submit" class="btn btn-primary"><i class="bi bi-save"></i> Update</button>
+    }
+</form>

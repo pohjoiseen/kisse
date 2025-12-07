@@ -1,0 +1,8 @@
+/.idea
+/kisse.db*
+/Uploads/**
+!/Uploads/.dir
+appsettings.Development.json
+*.DotSettings.user
+obj
+bin

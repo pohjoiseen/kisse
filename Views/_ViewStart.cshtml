@@ -1,0 +1,8 @@
+﻿@using Htmx
+@{
+    Layout = "_Layout";
+    if (Context.Request.IsHtmx())
+    {
+        Layout = null;
+    }
+}

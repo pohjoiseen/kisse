@@ -1,0 +1,86 @@
+@model ListModel<CatModel>
+@{
+    ViewData["Title"] = "All Cats";
+}
+
+<div class="container">
+<h1>@Model.TotalData cat(s) recorded</h1>
+<p class="text-muted">Ordered by name</p>
+
+@if (Model.Data.Count > 0)
+{
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Cat</th>
+            <th>Latest photos</th>
+            <th>Observations</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var cat in Model.Data)
+        {
+            <tr>
+                <td><b><a href="@Url.ActionLink("Edit", null, new { id = cat.Id })">@cat.Name</a></b>
+                    @if (!String.IsNullOrWhiteSpace(cat.Description))
+                    {
+                        <br>
+                        <em class="text-muted">(@cat.Description)</em>
+                    }
+                </td>
+
+                <td>
+                    <div class="d-flex gap-2 flex-wrap">
+                        @foreach (var photo in cat.LatestPhotos!)
+                        {
+                            <partial name="_PhotoThumbnail" model="photo"/>
+                        }
+                    </div>
+                </td>
+
+                <td>@cat.Observations!.Count
+                    @if (cat.Observations.Count > 0)
+                    {
+                        @if (cat.Observations.Count == 1)
+                        {
+                            <em>(@cat.Observations.First().Date.ToString("d.MM.yyyy"))</em>
+                        }
+                        else
+                        {
+                            <em>(@cat.Observations.OrderBy(o => o.Date).First().Date.ToString("d.MM.yyyy")&nbsp;&mdash;
+                                @cat.Observations.OrderByDescending(o => o.Date).First().Date.ToString("d.MM.yyyy"))</em>
+                        }
+                    }
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+    <div id="photo-view"></div>
+}
+else
+{
+    <p class="text-muted">No cats!</p>
+}
+
+@if (Model.TotalPages > 1)
+{
+    <nav class="mt-4 mb-5">
+        <ul class="pagination">
+            @for (int i = 1; i <= Model.TotalPages; i++)
+            {
+                @if (i == Model.Page)
+                {
+                    <li class="page-item active">
+                        <span class="page-link">@i</span>
+                    </li>
+                }
+                else
+                {
+                    <li class="page-item"><a class="page-link" href="@Url.ActionLink(null, null, new { page = i })">@i</a></li>
+                }
+            }
+        </ul>
+    </nav>
+}
+</div>

@@ -1,0 +1,67 @@
+@model PickCatModel
+
+@if (Context.Request.Method == "POST")
+{
+    <span id="cat" hx-swap-oob="true">
+        <partial name="_ViewShort" model="Model.Cat" />
+    </span>
+}
+else
+{
+    <div class="popup-form-page">
+        <form class="form container mt-4" hx-post hx-controller="Cat" hx-action="Pick" hx-target="#pick-cat">
+            <h1>Pick or add a new known 🐈</h1>
+
+            <p class="mb-0">
+                <strong>Currently selected:</strong>
+                <partial name="_ViewShort" model="Model.Cat"/>
+            </p>
+            @if (Model.Cat is not null)
+            {
+                <div class="d-flex gap-2 flex-wrap">
+                    @foreach (var photo in Model.Cat.LatestPhotos!)
+                    {
+                        <partial name="_PhotoThumbnail" model="@photo"/>
+                    }
+                </div>
+            }
+
+            <p class="mt-4 mb-2"><strong>Nearest cats:</strong></p>
+            @if (Model.NearestCats.Count > 0)
+            {
+                @foreach (var cat in Model.NearestCats)
+                {
+                    <button class="card w-100 mb-2" type="submit" name="id" value="@cat.Id">
+                        <div class="card-body">
+                            <partial name="_ViewShort" model="cat"/>
+                            <div class="d-flex gap-2 flex-wrap">
+                                @foreach (var photo in cat.LatestPhotos!)
+                                {
+                                    <partial name="_PhotoThumbnail" model="@photo"/>
+                                }
+                            </div>
+                        </div>
+                    </button>
+                }
+            }
+            else
+            {
+                <p><em>none</em></p>
+            }
+
+            <div class="mt-4">
+                <button class="btn btn-primary" hx-get hx-controller="Cat" hx-action="AddFromPick"
+                        hx-route-lat="@Model.Lat" hx-route-lng="@Model.Lng" hx-indicator="#add-cat-spinner" hx-disabled-elt="this" hx-target="#pick-cat">
+                    <i class="bi bi-plus-lg"></i> Add new cat
+                </button>
+                <button type="submit" name="id" value="null" class="btn btn-warning">
+                    <i class="bi bi-question-lg"></i> Unidentified cat
+                </button>
+                <button type="submit" name="cancel" value="true" class="btn btn-secondary">
+                    Cancel
+                </button>
+                <span id="add-cat-spinner" class="spinner-border align-middle htmx-indicator"></span>
+            </div>
+        </form>
+    </div>
+}

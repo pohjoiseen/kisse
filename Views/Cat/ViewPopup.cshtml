@@ -1,0 +1,30 @@
+@model Kisse.Models.CatModel
+
+<div>🐈 <b><a href="@Url.ActionLink("Edit", null, new { id = Model.Id })">@Model.Name</a></b>
+    @if (!String.IsNullOrWhiteSpace(Model.Description))
+    {
+        <em class="text-muted">(@Model.Description)</em>
+    }
+</div>
+
+<div class="d-flex gap-2 flex-wrap">
+    @foreach (var photo in Model.LatestPhotos!)
+    {
+        <partial name="_PhotoThumbnail" model="photo" />
+    }
+</div>
+
+<p><strong>Observations:</strong> @Model.Observations!.Count
+    @if (Model.Observations.Count > 0)
+    {
+        @if (Model.Observations.Count == 1)
+        {
+            <em>(@Model.Observations.First().Date.ToString("d.MM.yyyy"))</em>
+        }
+        else
+        {
+            <em>(@Model.Observations.OrderBy(o => o.Date).First().Date.ToString("d.MM.yyyy")&nbsp;&mdash;
+                @Model.Observations.OrderByDescending(o => o.Date).First().Date.ToString("d.MM.yyyy"))</em>
+        }
+    }
+</p>
