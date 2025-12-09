@@ -9,7 +9,7 @@
 else
 {
     <div class="popup-form-page">
-        <form class="form container mt-4" hx-post hx-controller="Cat" hx-action="Pick" hx-target="#pick-cat">
+        <form class="form container mt-4" hx-post hx-controller="Cat" hx-action="Pick" hx-target="#pick-cat" hx-swap="innerHTML swap:0.2s">
             <h1>Pick or add a new known 🐈</h1>
 
             <p class="mb-0">
@@ -51,7 +51,7 @@ else
 
             <div class="mt-4">
                 <button class="btn btn-primary" hx-get hx-controller="Cat" hx-action="AddFromPick"
-                        hx-route-lat="@Model.Lat" hx-route-lng="@Model.Lng" hx-indicator="#add-cat-spinner" hx-disabled-elt="this" hx-target="#pick-cat">
+                        hx-route-lat="@Model.Lat" hx-route-lng="@Model.Lng" hx-indicator="#add-cat-spinner" hx-disabled-elt="this" hx-target="#pick-cat" hx-swap="innerHTML swap:0.2s">
                     <i class="bi bi-plus-lg"></i> Add new cat
                 </button>
                 <button type="submit" name="id" value="null" class="btn btn-warning">

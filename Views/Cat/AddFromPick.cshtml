@@ -10,7 +10,7 @@ else
 {
     <div class="popup-form-page">
         <form class="form container mt-4" hx-post hx-controller="Cat" hx-action="AddFromPick" hx-target="#pick-cat" 
-              hx-disabled-elt="#add-cat-button" hx-indicator="#add-cat-spinner">
+              hx-disabled-elt="#add-cat-button" hx-indicator="#add-cat-spinner" hx-swap="innerHTML swap:0.2s">
             <h1>New 🐈</h1>
 
             <partial name="_Form" model="@Model"/>

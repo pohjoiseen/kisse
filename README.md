@@ -15,7 +15,6 @@ For database (which only has three tables, not counting ASP.NET Identity stuff) 
 TODO
 ====
 
-* Customize appearance a bit from default Bootstrap
 * Dockerize?
 * Deploy
 * Handle CSRF in forms probably

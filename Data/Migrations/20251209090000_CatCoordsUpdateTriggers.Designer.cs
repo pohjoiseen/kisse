@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Kisse.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20251207083709_CatCoordsUpdateTriggers")]
+    [Migration("20251209090000_CatCoordsUpdateTriggers")]
     partial class CatCoordsUpdateTriggers
     {
         /// <inheritdoc />

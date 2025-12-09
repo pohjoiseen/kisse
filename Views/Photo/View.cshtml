@@ -1,15 +1,15 @@
 @using System.Security.Claims
 @model Kisse.Data.Photo
 
-<div class="position-fixed d-flex flex-column" style="width: 100dvw; height: 100dvh; z-index: 4000; left: 0; right: 0; top: 0; bottom: 0; background: rgba(0, 0, 0, 0.8)"
-     hx-trigger="click" hx-swap="outerHTML" hx-get hx-controller="Home" hx-action="Blank" hx-target="this">
+<div class="photo-view-page"
+     hx-trigger="click" hx-swap="outerHTML swap:0.2s" hx-get hx-controller="Home" hx-action="Blank" hx-target="this">
     @if (Model.Observation is null || Model.Observation.UserId == User.FindFirstValue(ClaimTypes.NameIdentifier))
     {
         <button class="btn btn-danger position-absolute photo-view-delete-button" style="right: 20px; top: 20px;"
-                hx-trigger="click consume" hx-target="closest div" hx-swap="outerHTML"
+                hx-trigger="click consume" hx-target="closest div" hx-swap="outerHTML swap:0.2s"
                 hx-delete hx-controller="Photo" hx-action="Delete" hx-route-id="@Model.Id" hx-confirm="Delete photo from database?">
             <i class="bi bi-trash"></i>
         </button>
     }
-    <img src="@Model.OriginalFile" class="flex-grow-1 object-fit-contain mw-100 mh-100" style="cursor: pointer;"/>
+    <img src="@Model.OriginalFile" class="object-fit-contain w-100 h-100" style="cursor: pointer;"/>
 </div>

@@ -66,7 +66,7 @@
     @if (!isRO)
     {
         <button class="btn btn-secondary" hx-get hx-controller="Cat" hx-action="Pick"
-                hx-route-id="@Model.CatId" hx-target="#pick-cat"
+                hx-route-id="@Model.CatId" hx-target="#pick-cat" hx-swap="innerHTML swap:0.2s"
                 hx-vals="js:{lat: document.getElementById('location-selector-lat').value, lng: document.getElementById('location-selector-lng').value}"
                 hx-indicator="#pick-cat-spinner" hx-disabled-elt="this">
             <i class="bi bi-search-heart"></i>
