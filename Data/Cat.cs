@@ -2,10 +2,10 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Kisse.Data;
 
-/**
- * Known cat.  May have any number of observations linked to it, "name" and text note.
- * Same cat may be modified by multiple users.
- */
+/// <summary>
+/// Known cat.  May have any number of observations linked to it, "name" and text note.
+/// Same cat may be modified by multiple users.
+/// </summary>
 public class Cat
 {
     public int Id { get; init; }

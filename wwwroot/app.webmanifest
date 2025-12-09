@@ -1,0 +1,15 @@
+{
+    "name": "Kisse",
+    "start_url": "/",
+    "id": "kisse.pohjoiseen.fi",
+    "display": "standalone",
+    "icons": [
+        {
+            "src": "favicon.png",
+            "type": "image/png",
+            "sizes": "192x192"
+        }
+    ],
+    "theme_color": "#fc4d0d",
+    "background_color": "#ffffff"
+}

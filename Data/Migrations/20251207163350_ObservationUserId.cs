@@ -4,7 +4,9 @@
 
 namespace Kisse.Data.Migrations
 {
-    /// <inheritdoc />
+    /// <summary>
+    /// Forgotten UserId on Observations.
+    /// </summary>
     public partial class ObservationUserId : Migration
     {
         /// <inheritdoc />

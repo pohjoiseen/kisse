@@ -3,12 +3,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Kisse.Data;
 
-/**
- * Observation of a cat, by a certain user at a certain time.  May include:
- * - text note
- * - one or more pictures of the cat (Photo entity)
- * - reference to a known cat (Cat entity)
- */
+/// <summary>
+/// Observation of a cat, by a certain user at a certain time.  May include:
+/// - text note
+/// - one or more pictures of the cat (Photo entity)
+/// - reference to a known cat (Cat entity)
+/// </summary>
 [Index(nameof(CatId))]
 public class Observation
 {

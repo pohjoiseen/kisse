@@ -16,6 +16,12 @@ public class PhotoController(IConfiguration configuration, ApplicationDbContext 
 {
     public static readonly int ThumbnailSize = 200;
 
+    /// <summary>
+    /// Shows a full-screen photo popup page.
+    /// </summary>
+    /// <param name="id">Photo id</param>
+    /// <returns></returns>
+    [HttpGet]
     public async Task<IActionResult> View(int id)
     {
         var photo = await dbContext.Photos
@@ -29,6 +35,12 @@ public class PhotoController(IConfiguration configuration, ApplicationDbContext 
         return View(photo);
     }
 
+    /// <summary>
+    /// Deletes a photo and its uploaded files.
+    /// </summary>
+    /// <param name="id">Photo id</param>
+    /// <returns></returns>
+    [HttpPost]
     public async Task<IActionResult> Delete(int id)
     {
         var photo = await dbContext.Photos
@@ -46,9 +58,7 @@ public class PhotoController(IConfiguration configuration, ApplicationDbContext 
         dbContext.Photos.Remove(photo);
         try
         {
-            System.IO.File.Delete(photo.ThumbnailFile.Replace(configuration["Upload:URL"]!, configuration["Upload:Path"]));
-            System.IO.File.Delete(photo.OriginalFile.Replace(configuration["Upload:URL"]!, configuration["Upload:Path"]));
-            Directory.Delete(Path.GetDirectoryName(photo.ThumbnailFile.Replace(configuration["Upload:URL"]!, configuration["Upload:Path"]))!);
+            photo.DeleteFiles(configuration);
         }
         catch
         {
@@ -58,7 +68,15 @@ public class PhotoController(IConfiguration configuration, ApplicationDbContext 
         
         return View(photo);
     }
-        
+     
+    /// <summary>
+    /// Uploads one or more photos.  Accepts them as file uploads.  Stores original photos and their
+    /// downscaled thumbnails, creates and saves a Photo database entity, and returns a snipped with
+    /// thumbnails of uploaded photos.
+    /// </summary>
+    /// <param name="files">File(s) to upload</param>
+    /// <returns></returns>
+    [HttpPost]
     public async Task<IActionResult> Upload(IFormFileCollection? files)
     {
         if (files is null)
@@ -103,7 +121,6 @@ public class PhotoController(IConfiguration configuration, ApplicationDbContext 
                 thumbWidth = ThumbnailSize;
                 thumbHeight = image.Height * ThumbnailSize / image.Width;
             }
-
             var thumbpath = Path.Combine(dir, "t-" + filename);
             using (var thumbnail = image.Clone(x => x.Resize(thumbWidth, thumbHeight)))
             {
@@ -143,6 +160,7 @@ public class PhotoController(IConfiguration configuration, ApplicationDbContext 
                 lng = degrees + minutes + seconds;
             }
 
+            // save photo entity
             var photo = new Photo
             {
                 Date = date,

@@ -4,7 +4,11 @@
 
 namespace Kisse.Data.Migrations
 {
-    /// <inheritdoc />
+    /// <summary>
+    /// Adds triggers on Observations table that maintain coordinates of associated cats
+    /// (as average of observations coords).  NOTE!  Triggers will get deleted if Observations table
+    /// would be recreated by a later migration (which is necessary with sqlite to modify/remove fields).
+    /// </summary>
     public partial class CatCoordsUpdateTriggers : Migration
     {
         /// <inheritdoc />

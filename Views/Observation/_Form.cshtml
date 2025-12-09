@@ -1,6 +1,6 @@
 @using System.Security.Claims
 @using Htmx
-@model Kisse.Models.ObservationModel
+@model ObservationModel
 @{
     bool isRO = Model.Username != User.FindFirstValue(ClaimTypes.Name); 
 }
@@ -82,5 +82,3 @@
 {
     <script defer src="~/js/observation-form.js" asp-append-version="true"></script>
 }
-
-<script>window.isModified = false</script>

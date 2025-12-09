@@ -15,6 +15,12 @@ public class ObservationController(UserManager<IdentityUser> userManager, Applic
 {
     private static readonly int PageSize = 25;
         
+    /// <summary>
+    /// Shows a page with a paginated list of all observations.
+    /// </summary>
+    /// <param name="page">Page number, 1-indexed</param>
+    /// <returns></returns>
+    [HttpGet]
     public async Task<IActionResult> Index(int page = 1)
     {
         var observations = await dbContext.ObservationsWithRelated
@@ -32,6 +38,14 @@ public class ObservationController(UserManager<IdentityUser> userManager, Applic
         });
     }
 
+    /// <summary>
+    /// Shows a page that allows adding an observation.  Once saved, will redirect to Edit.
+    /// Note that photos being uploaded before observation is first saved are temporarily orphaned.
+    /// </summary>
+    /// <param name="observationModel">Observation being added</param>
+    /// <returns></returns>
+    [HttpGet]
+    [HttpPost]
     public async Task<IActionResult> Add(ObservationModel observationModel)
     {
         if (HttpContext.Request.Method == "GET")
@@ -63,6 +77,14 @@ public class ObservationController(UserManager<IdentityUser> userManager, Applic
         return View(observationModel);
     }
     
+    /// <summary>
+    /// Shows a page that allows editing an existing observation.
+    /// </summary>
+    /// <param name="id">Observation id</param>
+    /// <param name="observationModel">Observation being edited</param>
+    /// <returns></returns>
+    [HttpGet]
+    [HttpPost]
     public async Task<IActionResult> Edit(int id, ObservationModel observationModel)
     {
         var entity = await dbContext.ObservationsWithRelated
@@ -95,6 +117,12 @@ public class ObservationController(UserManager<IdentityUser> userManager, Applic
         return View(observationModel);
     }
 
+    /// <summary>
+    /// Shows a small summary snippet about an observation.  Meant to display as map popups.
+    /// </summary>
+    /// <param name="id">Observation id</param>
+    /// <returns></returns>
+    [HttpGet]
     public async Task<IActionResult> ViewPopup(int id)
     {
         var entity = await dbContext.ObservationsWithRelated
@@ -109,6 +137,11 @@ public class ObservationController(UserManager<IdentityUser> userManager, Applic
         return View(observation);
     }
 
+    /// <summary>
+    /// Deletes an observation, also deletes its photos and removes their uploaded files.
+    /// </summary>
+    /// <param name="id">Observation id</param>
+    /// <returns></returns>
     [HttpPost]
     public async Task<IActionResult> Delete(int id)
     {
@@ -127,9 +160,7 @@ public class ObservationController(UserManager<IdentityUser> userManager, Applic
         {
             try
             {
-                System.IO.File.Delete(photo.ThumbnailFile.Replace(configuration["Upload:URL"]!, configuration["Upload:Path"]));
-                System.IO.File.Delete(photo.OriginalFile.Replace(configuration["Upload:URL"]!, configuration["Upload:Path"]));
-                Directory.Delete(Path.GetDirectoryName(photo.ThumbnailFile.Replace(configuration["Upload:URL"]!, configuration["Upload:Path"]))!);
+                photo.DeleteFiles(configuration);
             }
             catch
             {

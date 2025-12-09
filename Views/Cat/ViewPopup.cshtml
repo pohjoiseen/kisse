@@ -1,4 +1,4 @@
-@model Kisse.Models.CatModel
+@model CatModel
 
 <div>🐈 <b><a href="@Url.ActionLink("Edit", null, new { id = Model.Id })">@Model.Name</a></b>
     @if (!String.IsNullOrWhiteSpace(Model.Description))

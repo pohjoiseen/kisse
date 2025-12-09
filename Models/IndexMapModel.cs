@@ -1,8 +1,8 @@
 namespace Kisse.Models;
 
-/**
- * Data model for index page, containing markers to display on the map.
- */
+/// <summary>
+/// Data model for index page, containing markers to display on the map.
+/// </summary>
 public record IndexMapModel
 {
     // id -> lat, lng

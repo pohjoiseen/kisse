@@ -12,6 +12,8 @@ public record CatModel
     // Editable fields
     [Required] [MaxLength(255)] public string Name { get; set; } = "";
     public string? Description { get; set; } = "";
+    
+    // For display, will be overridden in database by triggers anyway
     public double Lat { get; set; }
     public double Lng { get; set; }
     

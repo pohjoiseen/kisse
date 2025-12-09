@@ -12,6 +12,12 @@ public class CatController(ApplicationDbContext dbContext) : Controller
 {
     private static readonly int PageSize = 25;
         
+    /// <summary>
+    /// Shows a page with a paginated list of all cats.
+    /// </summary>
+    /// <param name="page">Page number, 1-indexed</param>
+    /// <returns></returns>
+    [HttpGet]
     public async Task<IActionResult> Index(int page = 1)
     {
         var cats = await dbContext.CatsWithRelated
@@ -30,6 +36,16 @@ public class CatController(ApplicationDbContext dbContext) : Controller
         });
     }
     
+    /// <summary>
+    /// Shows a popup page which allows picking a cat (to link it with observation) or to add a new one.
+    /// </summary>
+    /// <param name="lat">Latitude (to look for nearest cats)</param>
+    /// <param name="lng">Longitude (to look for nearest cats)</param>
+    /// <param name="id">Currently selected cat id, if any</param>
+    /// <param name="cancel">Cancel button pressed</param>
+    /// <returns></returns>
+    [HttpGet]
+    [HttpPost]
     public async Task<IActionResult> Pick(double lat, double lng, int? id, bool cancel)
     {
         if (cancel)
@@ -56,6 +72,15 @@ public class CatController(ApplicationDbContext dbContext) : Controller
         return View(model);
     }
     
+    /// <summary>
+    /// Shows a popup page which allows adding a new cat.  This is displayed from Pick()
+    /// and is currently the only way to add a cat (thus, through adding/editing an observation).
+    /// </summary>
+    /// <param name="cat">Cat being added</param>
+    /// <param name="cancel">Cancel button pressed</param>
+    /// <returns></returns>
+    [HttpGet]
+    [HttpPost]
     public async Task<IActionResult> AddFromPick(CatModel cat, bool cancel)
     {
         if (cancel)
@@ -80,6 +105,14 @@ public class CatController(ApplicationDbContext dbContext) : Controller
         return View(cat);
     }
     
+    /// <summary>
+    /// Shows a page which allows editing an existing cat.
+    /// </summary>
+    /// <param name="id">Cat id</param>
+    /// <param name="catModel">Cat being edited</param>
+    /// <returns></returns>
+    [HttpGet]
+    [HttpPost]
     public async Task<IActionResult> Edit(int id, CatModel catModel)
     {
         var entity = await dbContext.Cats.FindAsync(id);
@@ -105,6 +138,12 @@ public class CatController(ApplicationDbContext dbContext) : Controller
         return View(catModel);
     }
 
+    /// <summary>
+    /// Shows a small summary snippet about a cat.  Meant to display as map popups.
+    /// </summary>
+    /// <param name="id">Cat id</param>
+    /// <returns></returns>
+    [HttpGet]
     public async Task<IActionResult> ViewPopup(int id)
     {
         var entity = await dbContext.CatsWithRelated.FirstOrDefaultAsync(o => o.Id == id);
@@ -119,6 +158,11 @@ public class CatController(ApplicationDbContext dbContext) : Controller
         return View(cat);
     }
     
+    /// <summary>
+    /// Deletes a cat, unlinks its observations from it (but does not delete them).
+    /// </summary>
+    /// <param name="id">Cat id</param>
+    /// <returns></returns>
     [HttpPost]
     public async Task<IActionResult> Delete(int id)
     {

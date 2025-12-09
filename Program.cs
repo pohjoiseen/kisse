@@ -1,8 +1,7 @@
-/*
- * Kisse, a simple multi-user web application to record cat observations (with locations and uploaded photos).
- * ASP.NET 10, with mostly server-side rendered frontend using Htmx.
- */
-
+//
+// Kisse, a simple multi-user web application to record cat observations (with locations and uploaded photos).
+// ASP.NET 10, with mostly server-side rendered frontend using Htmx.
+//
 using System.CommandLine;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -17,7 +16,7 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlite(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddDefaultIdentity<IdentityUser>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews()
     .AddJsonOptions(o => o.JsonSerializerOptions.Converters.Add(new TupleConverterFactory()))
@@ -26,22 +25,15 @@ builder.Services.AddControllersWithViews()
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseMigrationsEndPoint();
-}
-else
+if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
 app.UseHttpsRedirection();
 app.UseRouting();
-
 app.UseAuthorization();
-
 app.MapStaticAssets();
 // Upload directory (separate from wwwroot)
 app.UseStaticFiles(new StaticFileOptions
@@ -49,18 +41,17 @@ app.UseStaticFiles(new StaticFileOptions
     FileProvider = new PhysicalFileProvider(Path.GetFullPath(app.Configuration["Upload:Path"]!.TrimEnd('/'))),
     RequestPath = app.Configuration["Upload:URL"]!.TrimEnd('/')
 });
-
 app.MapControllerRoute(
         name: "default",
         pattern: "{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
-
 app.MapRazorPages()
    .WithStaticAssets();
 
 // allow several actions on command line
 RootCommand rootCommand = new RootCommand("Kisse, a simple web app for mapping out observations of outdoor cats.");
 
+// migration command to use in production
 Command migrateCommand = new Command("migrate", "Apply all database migrations.");
 migrateCommand.SetAction(async _ =>
 {
@@ -69,6 +60,7 @@ migrateCommand.SetAction(async _ =>
 });
 rootCommand.Subcommands.Add(migrateCommand);
 
+// command to add a new user, registration through UI is disabled
 var usernameOption = new Option<string>("--username")
 {
     Description = "The username of the user.",
@@ -110,6 +102,7 @@ addUserCommand.SetAction(async result =>
 });
 rootCommand.Subcommands.Add(addUserCommand);
 
+// command to change user's password, this also shouldn't be available in UI
 Command setPasswordCommand = new Command("set-password", "Change user's password in the database.")
 {
     usernameOption,
@@ -135,5 +128,6 @@ setPasswordCommand.SetAction(async result =>
 });
 rootCommand.Subcommands.Add(setPasswordCommand);
 
+// default is to run the app, go ahead
 rootCommand.SetAction(async _ => await app.RunAsync());
 return await rootCommand.Parse(args).InvokeAsync();

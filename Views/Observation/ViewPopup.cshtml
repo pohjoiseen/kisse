@@ -1,4 +1,4 @@
-@model Kisse.Models.ObservationModel
+@model ObservationModel
 
 <div>👀 <b><a href="@Url.ActionLink("Edit", null, new { id = Model.Id })">@Model.Date.ToString("d.M.yyyy HH:mm")</a></b>
     by <b>@Model.Username</b><br/>@Model.Description</div>

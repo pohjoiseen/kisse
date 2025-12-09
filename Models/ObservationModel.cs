@@ -4,9 +4,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Kisse.Models;
 
-/**
- * View model for cat observation.
- */
 public record ObservationModel : IValidatableObject
 {
 	// Record id, read-only

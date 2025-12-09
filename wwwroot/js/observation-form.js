@@ -1,7 +1,8 @@
 // if opened with location set to default coordinates, start by using browser geolocation
 if (Math.abs(parseFloat(document.getElementById('location-selector-lat').value) - window.DEFAULT_LAT) < 0.00001 &&
-    Math.abs(parseFloat(document.getElementById('location-selector-lng').value) - window.DEFAULT_LNG) < 0.00001) {
-    navigator.geolocation.getCurrentPosition((position) => {
+    Math.abs(parseFloat(document.getElementById('location-selector-lng').value) - window.DEFAULT_LNG) < 0.00001 &&
+    'geolocation' in window.navigator) {
+    window.navigator.geolocation.getCurrentPosition((position) => {
         window.locationSelectorMap.panTo(L.latLng(position.coords.latitude, position.coords.longitude));
     });
 }
