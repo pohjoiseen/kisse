@@ -40,7 +40,7 @@ public class PhotoController(IConfiguration configuration, ApplicationDbContext 
     /// </summary>
     /// <param name="id">Photo id</param>
     /// <returns></returns>
-    [HttpPost]
+    [HttpDelete]
     public async Task<IActionResult> Delete(int id)
     {
         var photo = await dbContext.Photos
