@@ -14,7 +14,7 @@
         <tr>
             <th>Cat</th>
             <th>Latest photos</th>
-            <th>Observations</th>
+            <th>Obser&shy;vations</th>
         </tr>
         </thead>
         <tbody>
@@ -43,12 +43,12 @@
                     {
                         @if (cat.Observations.Count == 1)
                         {
-                            <em>(@cat.Observations.First().Date.ToString("d.MM.yyyy"))</em>
+                            <em>(@cat.Observations.First().Date.ToString("d.MM.")<wbr/>@cat.Observations.First().Date.ToString("yyyy"))</em>
                         }
                         else
                         {
-                            <em>(@cat.Observations.OrderBy(o => o.Date).First().Date.ToString("d.MM.yyyy")&nbsp;&mdash;
-                                @cat.Observations.OrderByDescending(o => o.Date).First().Date.ToString("d.MM.yyyy"))</em>
+                            <em>(@cat.Observations.OrderBy(o => o.Date).First().Date.ToString("d.MM.")<wbr/>@cat.Observations.OrderBy(o => o.Date).First().Date.ToString("yyyy")&nbsp;&mdash;
+                                @cat.Observations.OrderByDescending(o => o.Date).First().Date.ToString("d.MM."))<wbr/>@cat.Observations.OrderByDescending(o => o.Date).First().Date.ToString("yyyy"))</em>
                         }
                     }
                 </td>

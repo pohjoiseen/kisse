@@ -84,6 +84,21 @@ html {
   font-size: 28px;
 }
 
+/* Animate menu (replacing Bootstrap JS) */
+
+@media (max-height: 1399px) {
+  #menu {
+    overflow: hidden;
+    height: 0;
+    transition: all 0.2s ease-in;
+    view-transition-group: root;
+  }
+
+  #menu.show {
+    height: 160px; /* fixed (4 rows), could be done better? */
+  }
+}
+
 /* Add space on bottom of all forms */
 
 .form {
@@ -190,4 +205,30 @@ body:has(.popup-form-page) {
     transform: translateY(-10%);
     opacity: 0;
   }
+}
+
+/* Photo thumbnail */
+
+.photo-thumbnail img {
+  border-radius: var(--bs-border-radius);
+}
+
+/* For phone/tabled view, make photos smaller and limit their number to 3 */
+@media (max-width: 1023px) {
+  .table .photo-thumbnail img {
+    width: 50px;
+    height: 50px;
+  }
+  
+  .table .photo-thumbnail:nth-child(n+4) {
+    display: none;
+  }
+}
+
+/* Allow text overflow to fade out in tables when width is not enough */ 
+
+@media (max-width: 1023px) {
+  td {
+    text-overflow: fade;
+  } 
 }

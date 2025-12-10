@@ -51,11 +51,11 @@
                             <i class="bi bi-plus-lg"></i> Add Observation</a>
                 }
 
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                <button class="navbar-toggler" type="button" onclick="document.getElementById('menu').classList.toggle('show')" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation" style="padding: 4px;">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-xxl-inline-flex justify-content-between flex-grow-0">
+                <div id="menu" class="navbar-collapse d-xxl-inline-flex justify-content-between flex-grow-0">
                     <div class="navbar-nav flex-grow-1"></div>
                     <partial name="_LayoutMenuPartial" />
                 </div>
@@ -64,13 +64,9 @@
     </header>
     @RenderBody()
     <environment include="Development">
-        <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.js" integrity="sha256-aVZjRM9XIr5RrLyQ/bJsJOsBzBwVP3OLFrL6h8zTtRA=" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.8/dist/htmx.js" integrity="sha256-upUwYnay6R+DA68rROTAP+EdfO3NvOqtE513PgDyAYM=" crossorigin="anonymous"></script>
     </environment>
     <environment exclude="Development">
-        <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha256-5P1JGBOIxI7FBAvT/mb1fCnI5n/NhQKzNUuW7Hq0fMc=" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.8/dist/htmx.min.js" integrity="sha256-Iig+9oy3VFkU8KiKG97cclanA9HVgMHSVSF9ClDTExM=" crossorigin="anonymous"></script>    
     </environment>
     <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="anonymous"></script>
