@@ -25,6 +25,11 @@ html {
   --bs-navbar-padding-y: 0;
 }
 
+.pagination {
+  --bs-pagination-active-bg: #fc4d0d;
+  --bs-pagination-active-border-color: #fc4d0d;
+}
+
 .btn-primary {
   --bs-btn-color: #fff;
   --bs-btn-bg: #fc4d0d;

@@ -93,7 +93,7 @@ for (const [id, [lat, lng]] of Object.entries(window.CATS)) {
         })
     });
     marker.id = id;
-    marker.bindPopup(`<div class="cat-popup-loading" data-id="${id}">Loading...</div>`);
+    marker.bindPopup(`<div class="cat-popup-loading" data-id="${id}">Loading...</div>`, {maxWidth: 360});
     marker.getPopup().on('contentupdate', onCatPopup);
     clusteredMarkers.addLayer(marker);
 }
@@ -114,7 +114,7 @@ for (const [id, [lat, lng]] of Object.entries(window.OBSERVATIONS)) {
         })
     });
     marker.id = id;
-    marker.bindPopup(`<div class="observation-popup-loading" data-id="${id}">Loading...</div>`);
+    marker.bindPopup(`<div class="observation-popup-loading" data-id="${id}">Loading...</div>`, {maxWidth: 360});
     marker.getPopup().on('contentupdate', onObservationPopup);
     clusteredMarkers.addLayer(marker);
 }

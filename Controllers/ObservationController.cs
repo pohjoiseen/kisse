@@ -105,10 +105,10 @@ public class ObservationController(UserManager<IdentityUser> userManager, Applic
         
         if (HttpContext.Request.Method == "POST" && ModelState.IsValid)
         {
-            if (entity.User.Id != User.FindFirstValue(ClaimTypes.NameIdentifier))
-            {
-                return Forbid();
-            }
+            //if (entity.User.Id != User.FindFirstValue(ClaimTypes.NameIdentifier))
+            //{
+            //    return Forbid();
+            //}
             
             await observationModel.ToEntity(entity, dbContext);
             await dbContext.SaveChangesAsync();
@@ -151,10 +151,10 @@ public class ObservationController(UserManager<IdentityUser> userManager, Applic
         {
             return NotFound();
         }
-        if (entity.User.Id != User.FindFirstValue(ClaimTypes.NameIdentifier))
-        {
-            return Forbid();
-        }
+        //if (entity.User.Id != User.FindFirstValue(ClaimTypes.NameIdentifier))
+        //{
+        //    return Forbid();
+        //}
 
         foreach (var photo in entity.Photos)
         {

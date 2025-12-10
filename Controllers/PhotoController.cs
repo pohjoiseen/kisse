@@ -50,10 +50,10 @@ public class PhotoController(IConfiguration configuration, ApplicationDbContext 
         {
             return NotFound();
         }
-        if (photo.Observation is not null && photo.Observation.UserId != User.FindFirstValue(ClaimTypes.NameIdentifier))
-        {
-            return Forbid();
-        }
+        //if (photo.Observation is not null && photo.Observation.UserId != User.FindFirstValue(ClaimTypes.NameIdentifier))
+        //{
+        //    return Forbid();
+        //}
 
         dbContext.Photos.Remove(photo);
         try

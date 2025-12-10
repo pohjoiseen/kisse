@@ -2,7 +2,7 @@
 @using Htmx
 @model ObservationModel
 @{
-    bool isRO = Model.Username != User.FindFirstValue(ClaimTypes.Name); 
+    bool isRO = false; /* Model.Username != User.FindFirstValue(ClaimTypes.Name); */ 
 }
 
 <input type="hidden" name="id" value="@Model.Id">

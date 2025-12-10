@@ -12,7 +12,7 @@
     <table class="table">
         <thead>
         <tr>
-            <th>Date</th>
+            <th>Date, details</th>
             <th>User</th>
             <th>Photos</th>
             <th>Cat</th>
@@ -22,7 +22,10 @@
         @foreach (var observation in Model.Data)
         {
             <tr>
-                <td><b><a href="@Url.ActionLink("Edit", null, new { id = observation.Id })">@observation.Date.ToString("d.M.yyyy HH:mm")</a></b></td>
+                <td>
+                    <b><a href="@Url.ActionLink("Edit", null, new { id = observation.Id })">@observation.Date.ToString("d.M.yyyy HH:mm")</a></b>
+                    <br/>@observation.Description
+                </td>
                 <td>@observation.Username</td>
                 <td>
                     <div class="d-flex gap-2 flex-wrap">

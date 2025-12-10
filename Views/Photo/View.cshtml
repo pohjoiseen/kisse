@@ -3,7 +3,7 @@
 
 <div class="photo-view-page"
      hx-trigger="click" hx-swap="outerHTML swap:0.2s" hx-get hx-controller="Home" hx-action="Blank" hx-target="this">
-    @if (Model.Observation is null || Model.Observation.UserId == User.FindFirstValue(ClaimTypes.NameIdentifier))
+    @if (true /* Model.Observation is null || Model.Observation.UserId == User.FindFirstValue(ClaimTypes.NameIdentifier) */)
     {
         <button class="btn btn-danger position-absolute photo-view-delete-button" style="right: 20px; top: 20px;"
                 hx-trigger="click consume" hx-target="closest div" hx-swap="outerHTML swap:0.2s"
