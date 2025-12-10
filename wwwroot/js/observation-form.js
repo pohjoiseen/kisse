@@ -20,3 +20,11 @@ document.addEventListener('htmx:afterSwap', (e) => {
         }
     }
 });
+
+// allow uploading files by pasting
+window.addEventListener('paste', e => {
+    if (e.clipboardData?.files?.length > 0) {
+        document.getElementById('upload-input').files = e.clipboardData.files;
+        htmx.trigger('#upload-input', 'input', {value: 'pasted'});
+    }
+});

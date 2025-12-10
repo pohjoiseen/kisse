@@ -86,7 +86,7 @@ html {
 
 /* Animate menu (replacing Bootstrap JS) */
 
-@media (max-height: 1399px) {
+@media (max-width: 1399px) {
   #menu {
     overflow: hidden;
     height: 0;
